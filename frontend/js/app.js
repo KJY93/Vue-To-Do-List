@@ -78,9 +78,21 @@
 				this.todos = filteredActiveArray;
 			},
 
+			// When showCompleted link is clicked on
+			showCompleted: async function () {
+				let response = await fetch(`http://localhost:8000/api/todos/`);
+				let data = await response.json();
+				let filteredCompletedArray = [];
 
-
-
+				data.forEach(element => {
+					if (element.completed == true) {
+							filteredCompletedArray.push(element)
+						}
+					}
+				);
+				this.filteredTodos = filteredCompletedArray;
+				this.todos = filteredCompletedArray;
+			},
 
 			// READ to-do-list items from Database (READ)
 			all: async function () {
