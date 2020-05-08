@@ -29,8 +29,8 @@
 				newTodo: '',
 				editedTodo: null,
 				visibility: 'all',
-
 				filteredTodos: [],
+
 
 			}
 		},
@@ -58,6 +58,11 @@
 		},
 
 		methods: {
+
+			// When showAll Link is clicked on
+			showAll: function() {
+				this.all();
+			},
 
 			// READ to-do-list items from Database (READ)
 			all: async function () {
@@ -145,7 +150,6 @@
 					// serialize JSON
 					body: JSON.stringify({
 						title: todo.title,
-						id: todo.id,
 						completed: false
 					})
 				});
@@ -155,14 +159,37 @@
 			},
 			// End Update
 
+			// Update Task Status
+			handleChange: async function (todo) {			
+				console.log(todo)
+				const response = await fetch(`http://localhost:8000/api/todos/${todo.id}/`, {
+					method: 'PUT', 
+					headers: {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json'
+					},
+					// serialize JSON
+					body: JSON.stringify({
+						title: todo.title,
+						completed: true
+					})
+				});
+				this.all();
+				console.log(response);
+			},
+		
+
 			cancelEdit: function (todo) {
 				this.editedTodo = null;
 				todo.title = this.beforeEditCache;
 			},
 
 			removeCompleted: function () {
+				console.log(12312312123123)
 				this.todos = filters.active(this.todos);
 			}
+
+
 		},
 
 		// a custom directive to wait for the DOM to be updated
