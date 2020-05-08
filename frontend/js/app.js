@@ -31,11 +31,11 @@
 				visibility: 'all',
 
 				filteredTodos: [],
-				id: ''
+
 			}
 		},
-		
-		mounted: function() {
+
+		mounted: function () {
 			this.all();
 		},
 
@@ -58,10 +58,9 @@
 		},
 
 		methods: {
-			
+
 			// READ to-do-list items from Database (READ)
-			all: async function () 
-			{
+			all: async function () {
 				let response = await fetch(`http://localhost:8000/api/todos/`);
 				let data = await response.json();
 
@@ -70,6 +69,7 @@
 				this.filteredTodos = data;
 				this.todos = data;
 			},
+			// End READ
 
 			pluralize: function (word, count) {
 				return word + (count === 1 ? '' : 's');
@@ -82,31 +82,47 @@
 				}
 
 				// ADD Data to Database (CREATE)
-				fetch('http://localhost:8000/api/todos/' , {
-					method: "POST",
+				fetch('http://localhost:8000/api/todos/', {
+					method: 'POST',
 					headers: {
-					  'Accept': 'application/json',
-					  'Content-Type': 'application/json'
+						'Accept': 'application/json',
+						'Content-Type': 'application/json'
 					},
 					// serialize JSON
 					body: JSON.stringify({
 						title: value,
-						completed: false 
+						completed: false
 					})
 				}).then(res => {
 					this.newTodo = '',
 					this.all(),
-					console.log(res)					
+					console.log(res)
 				})
 				// End CREATE 
 
 				// this.newTodo = ''
 			},
 
-			removeTodo: function (todo) {
-				var index = this.todos.indexOf(todo);
-				this.todos.splice(index, 1);
+			// removeTodo: function (todo) {
+
+			// 	var index = this.todos.indexOf(todo);
+			// 	this.todos.splice(index, 1);
+
+
+			// },
+
+			// DELETE to-do-list items from Database (DELETE)
+			removeTodo: async function (todo) {				
+				const response = await fetch(`http://localhost:8000/api/todos/${todo.id}`, {
+					method: 'DELETE', 
+					headers: {
+						'Content-Type': 'application/json'
+					},
+				});
+				console.log(response);
+				this.all();
 			},
+			// End Delete
 
 			editTodo: function (todo) {
 				this.beforeEditCache = todo.title;
