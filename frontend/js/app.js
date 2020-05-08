@@ -99,23 +99,14 @@
 					console.log(res)
 				})
 				// End CREATE 
-
-				// this.newTodo = ''
 			},
-
-			// removeTodo: function (todo) {
-
-			// 	var index = this.todos.indexOf(todo);
-			// 	this.todos.splice(index, 1);
-
-
-			// },
 
 			// DELETE to-do-list items from Database (DELETE)
 			removeTodo: async function (todo) {				
 				const response = await fetch(`http://localhost:8000/api/todos/${todo.id}`, {
 					method: 'DELETE', 
 					headers: {
+						'Accept': 'application/json',
 						'Content-Type': 'application/json'
 					},
 				});
@@ -129,16 +120,40 @@
 				this.editedTodo = todo;
 			},
 
+			// UPDATE to-do-list-items in Database
 			doneEdit: function (todo) {
+
 				if (!this.editedTodo) {
 					return;
 				}
 				this.editedTodo = null;
-				todo.title = todo.title.trim();
+
 				if (!todo.title) {
 					this.removeTodo(todo);
 				}
+
+				this.updateEdit(todo);
 			},
+
+			updateEdit: async function (todo) {				
+				const response = await fetch(`http://localhost:8000/api/todos/${todo.id}/`, {
+					method: 'PUT', 
+					headers: {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json'
+					},
+					// serialize JSON
+					body: JSON.stringify({
+						title: todo.title,
+						id: todo.id,
+						completed: false
+					})
+				});
+				this.editedTodo = null;
+				this.all();
+				console.log(response);
+			},
+			// End Update
 
 			cancelEdit: function (todo) {
 				this.editedTodo = null;
