@@ -30,8 +30,6 @@
 				editedTodo: null,
 				visibility: 'all',
 				filteredTodos: [],
-
-
 			}
 		},
 
@@ -63,6 +61,26 @@
 			showAll: function() {
 				this.all();
 			},
+
+			// When showActive link is clicked on
+			showActive: async function () {
+				let response = await fetch(`http://localhost:8000/api/todos/`);
+				let data = await response.json();
+				let filteredActiveArray = [];
+
+				data.forEach(element => {
+					if (element.completed == false) {
+							filteredActiveArray.push(element)
+						}
+					}
+				);
+				this.filteredTodos = filteredActiveArray;
+				this.todos = filteredActiveArray;
+			},
+
+
+
+
 
 			// READ to-do-list items from Database (READ)
 			all: async function () {
@@ -160,9 +178,8 @@
 			// End Update
 
 			// Update Task Status
-			handleChange: async function (todo) {			
-				console.log(todo)
-				const response = await fetch(`http://localhost:8000/api/todos/${todo.id}/`, {
+			handleChange: async function (todo) {	
+				const response = await fetch(`http://localhost:8000/api/todos/${todo.id}/`, { 
 					method: 'PUT', 
 					headers: {
 						'Accept': 'application/json',
@@ -171,11 +188,13 @@
 					// serialize JSON
 					body: JSON.stringify({
 						title: todo.title,
-						completed: true
+						completed: todo.completed
 					})
 				});
+
 				this.all();
 				console.log(response);
+				console.log(todo)
 			},
 		
 
@@ -185,7 +204,7 @@
 			},
 
 			removeCompleted: function () {
-				console.log(12312312123123)
+
 				this.todos = filters.active(this.todos);
 			}
 
