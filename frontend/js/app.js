@@ -10,7 +10,6 @@
 				return !todo.completed;
 			});
 		},
-		// this function was never used in the script
 		completed: function (todos) {
 			return todos.filter(function (todo) {
 				return todo.completed;
@@ -30,6 +29,7 @@
 				editedTodo: null,
 				visibility: 'all',
 				filteredTodos: [],
+				remainingActive: [],
 			}
 		},
 
@@ -41,9 +41,9 @@
 		// http://vuejs.org/guide/computed.html
 		computed: {
 			remaining: function () {
-				return filters.active(this.todos).length;
+				return filters.active(this.remainingActive).length;
 			},
-			allDone: {
+			allDone: {	
 				get: function () {
 					return this.remaining === 0;
 				},
@@ -56,7 +56,6 @@
 		},
 
 		methods: {
-
 			// When showAll Link is clicked on
 			showAll: function() {
 				this.all();
@@ -103,6 +102,18 @@
 				console.log(data);
 				this.filteredTodos = data;
 				this.todos = data;
+
+				// declare an empty array called filteredTodosArray
+				let filteredTodosArray = []
+				
+				this.filteredTodos.forEach(element => {
+					if (element.completed == false) {
+						filteredTodosArray.push(element)
+						}
+					}
+				);
+
+				this.remainingActive = filteredTodosArray
 			},
 			// End READ
 
@@ -216,8 +227,7 @@
 			},
 
 			removeCompleted: function () {
-
-				this.todos = filters.active(this.todos);
+				this.todos = filters.active(this.remainingActive);
 			}
 
 
