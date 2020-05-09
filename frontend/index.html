@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Vue.js • TodoMVC</title>
+		<link rel="icon" href="static/img/check.ico">
 		<link rel="stylesheet" href="node_modules/todomvc-common/base.css">
 		<link rel="stylesheet" href="node_modules/todomvc-app-css/index.css">
 		<style> [v-cloak] { display: none; } </style>
@@ -19,7 +20,8 @@
 				<ul class="todo-list">
 					<li class="todo" v-for="todo in filteredTodos" :key="todo.id" :class="{completed: todo.completed, editing: todo == editedTodo}">
 						<div class="view">
-							<input class="toggle" type="checkbox" v-model="todo.completed">
+							<!-- add handleChange handler -->
+							<input @change="handleChange(todo)" class="toggle" type="checkbox" v-model="todo.completed">
 							<label @dblclick="editTodo(todo)">{{todo.title}}</label>
 							<button class="destroy" @click="removeTodo(todo)"></button>
 						</div>
@@ -27,14 +29,16 @@
 					</li>
 				</ul>
 			</section>
-			<footer class="footer" v-show="todos.length">
+
+			<!-- remove v-show="todos.length" attribute to ensure the footer section is on display everytime -->
+			<footer class="footer">
 				<span class="todo-count">
 					<strong v-text="remaining"></strong> {{pluralize('item', remaining)}} left
 				</span>
 				<ul class="filters">
-					<li><a href="#/all" :class="{selected: visibility == 'all'}">All</a></li>
-					<li><a href="#/active" :class="{selected: visibility == 'active'}">Active</a></li>
-					<li><a href="#/completed" :class="{selected: visibility == 'completed'}">Completed</a></li>
+					<li><a @click="showAll" href="#/all" :class="{selected: visibility == 'all'}">All</a></li>
+					<li><a @click="showActive" href="#/active" :class="{selected: visibility == 'active'}">Active</a></li>
+					<li><a @click="showCompleted" href="#/completed" :class="{selected: visibility == 'completed'}">Completed</a></li>
 				</ul>
 				<button class="clear-completed" @click="removeCompleted" v-show="todos.length > remaining">
 					Clear completed
