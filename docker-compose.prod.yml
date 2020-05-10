@@ -28,8 +28,16 @@ services:
       - media_volume:/home/app/web/mediafiles
     ports:
       - 1337:80
+      - 8001:8000
     depends_on:
       - web
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    restart: always
+    expose:
+      - 80
+  
 
 
 volumes:
