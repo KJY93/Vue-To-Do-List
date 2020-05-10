@@ -69,7 +69,7 @@ removed from display.
 |6              | The to-do-lists will re-render after each CRUD action performed by the user. | Pass     |
 |6              | User is able to view their remaining to-do-list items no matter they clicked on either the All, Active or Completed tab at the footer section | Pass     |
 
-Credits & Acknowledgements:
+## Credits & Acknowledgements:
 Below are some of the useful articles that I have come across when trying to figure out how to perform containerization
 in Docker. 
 1. https://uwsgi-docs.readthedocs.io/en/latest/tutorials/Django_and_nginx.html
