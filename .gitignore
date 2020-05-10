@@ -131,3 +131,8 @@ public/
 .deploy*/
 src/_drafts
 package-lock.json
+
+# environment variable files for production
+.env.dev
+.env.prod
+.env.prod.db
