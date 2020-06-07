@@ -76,3 +76,6 @@ in Docker.
 4. https://medium.com/@samy_raps/flask-vue-mysql-on-docker-part-i-ii-lets-dockerize-1ca3737ebc7c
 5. https://dev.to/ganeshmani/nginx-for-front-end-developers-1jkd
 6. https://dev.to/ganeshmani/nginx-for-front-end-developers-beyond-the-basics-2ief
+7. https://www.craigfranklin.dev/python/docker/javascript/2019/05/16/docker-compose-django-cra/
+8. https://github.com/cfranklin11/docker-django-react/blob/master/frontend/Dockerfile
+9. https://hemanshubhojak.com/2016/05/12/simple-docker-container-running-http-server.html
