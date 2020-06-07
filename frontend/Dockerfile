@@ -1,21 +1,19 @@
-# build stage
-FROM node:12.14.0-alpine as build-stage
-# WORKDIR /app
+FROM ubuntu:latest
+
+RUN apt-get update
+RUN apt-get install -y nodejs
+RUN apt-get install -y npm
+
+RUN npm install -g http-server
+
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+# Install dependencies
+COPY package.json /usr/src/app
+
 RUN npm install
-COPY . .
-RUN npm run build
 
-# Production stage
-FROM nginx:1.16.1-alpine as production-stage
-# COPY --from=build-stage /app/dist /usr/share/nginx/html
+COPY . /usr/src/app
 
-COPY --from=build-stage /usr/src/app/dist /usr/share/nginx/html
-
-# EXPOSE 80
-EXPOSE 8000
-
-CMD [ "nginx", "-g", "daemon off;"]
-
+EXPOSE 8080
+CMD ["http-server", "-s"]
