@@ -5,8 +5,8 @@ This is a todolist application that allows user to perform CRUD operation on it,
 READ, UPDATE, DELETE
 
 ## Demo Link on Features Implemented Thus Far
-Screencast Link: http://youtu.be/YQLKsTJyh90?hd=1
-Note: Demo performed on local PC FE running at http://localhost:3000/ while BE running at http://localhost:8000/api/todos/
+- Screencast Link: http://youtu.be/YQLKsTJyh90?hd=1
+- Note: Demo performed on local PC FE running at http://localhost:3000/ while BE running at http://localhost:8000/api/todos/
 
 ## Features Implemented
 a. CRUD Features
