@@ -5,12 +5,12 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile.prod
-    command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000
+    command: gunicorn backend.wsgi:application --bind 0.0.0.0:9000
     volumes:
       - static_volume:/home/app/web/staticfiles
       - media_volume:/home/app/web/mediafiles
     expose:
-      - 8000
+      - 9000
     env_file:
       - ./.env.prod
     depends_on:
@@ -27,18 +27,23 @@ services:
       - static_volume:/home/app/web/staticfiles
       - media_volume:/home/app/web/mediafiles
     ports:
-      - 1337:80
-      - 8001:8000
+      - 8000:80
+      - 3000:8080
     depends_on:
       - web
   frontend:
     build: ./frontend
-    container_name: frontend
-    restart: always
+    volumes:
+      - ./frontend:/usr/src/app
+      # One-way volume to use node_modules from inside image
+      - /usr/src/app/node_modules
     expose:
-      - 80
-  
-
+      - 8080
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - web
+    command: npm start
 
 volumes:
   postgres_data:
