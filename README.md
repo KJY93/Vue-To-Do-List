@@ -6,9 +6,7 @@ READ, UPDATE, DELETE
 
 ## Demo Link on Features Implemented Thus Far
 Screencast Link: http://youtu.be/YQLKsTJyh90?hd=1
-Note: Demo performed on local PC FE running at http://localhost:3000/while BE running at http://localhost:8000/api/todos/
-
-
+Note: Demo performed on local PC FE running at http://localhost:3000/ while BE running at http://localhost:8000/api/todos/
 
 ## Features Implemented
 a. CRUD Features
@@ -34,15 +32,16 @@ dockerjy93/docker_todolist_backend
 ii. Frontend
 Frontend contains the VueJS todolist application that was cloned from todomvc.com.
 It also contains the Docker file that is needed to containarized it in Docker.
-Note: Currently, the build for the Docker container was not successful.Based on
-the error log, it seems like the NPM run build command cannot be executed as the
-build script in the package.json file is not there as compared to the rest of the Vue application
-that was created from scratch, there will usually be a build script attribute in the
-package.json file.
 
 iii. Nginx
 Nginx is the folder that contains the Docker and nginx.conf file that is used to configure
 the Gunicorn application server to interface with the todo list application.
+
+## Overview of how the application works
+Backend server is running on port 9000 in Docker container. 
+From our host PC, when localhost:8000 is visited, Nginx which is listening at port 80 will route the request to the upstream web backend server.
+Frontend server is running on port 8080 in Docker container.
+From our host PC, when localhost:3000 is visited, Nginx which is listening at port 8080 will route it to our frontend app.
 
 ## Bugs and Limitations Discovered
 The two limitations with the web application discovered thus far is as below:
@@ -52,10 +51,9 @@ to do a bulk update all the status of the to-do-list items to the database.
 completed to-do-list items from display
 
 ## Features to be implemented in the future
-1. To implement the dockerization of the frontend VueJS application
-2. To implement the bulk update of the to-do-list items to the database when user clicked on the
+1. To implement the bulk update of the to-do-list items to the database when user clicked on the
 checkbox beside "What needs to be done"
-3. To implement the remove completed button functionality that allows the completed to-do-list items to be
+2. To implement the remove completed button functionality that allows the completed to-do-list items to be
 removed from display.
 
 ## Test Cases (Manual Testing)
@@ -76,3 +74,5 @@ in Docker.
 2. https://github.com/twtrubiks/docker-django-nginx-uwsgi-postgres-tutorial/blob/master/README.en.md
 3. https://testdriven.io/blog/dockerizing-django-with-postgres-gunicorn-and-nginx/#gunicorn
 4. https://medium.com/@samy_raps/flask-vue-mysql-on-docker-part-i-ii-lets-dockerize-1ca3737ebc7c
+5. https://dev.to/ganeshmani/nginx-for-front-end-developers-1jkd
+6. https://dev.to/ganeshmani/nginx-for-front-end-developers-beyond-the-basics-2ief
