@@ -43,6 +43,17 @@ From our host PC, when localhost:8000 is visited, Nginx which is listening at po
 Frontend server is running on port 8080 in Docker container.
 From our host PC, when localhost:3000 is visited, Nginx which is listening at port 8080 will route it to our frontend app.
 
+To spin up the docker container, type in the following commands in the command line:
+```
+docker-compose down -v 
+docker-compose -f docker-compose.prod.yml up -d --build
+docker-compose -f docker-compose.prod.yml exec web python manage.py migrate --noinput
+docker-compose -f docker-compose.prod.yml exec web python manage.py collectstatic --no-input --clear
+```
+After that:
+- To access the frontend, go to localhost:3000
+- To access the backend (DJANGO), go to localhost:8000/api/todos
+
 ## Bugs and Limitations Discovered
 The two limitations with the web application discovered thus far is as below:
 1. Clicking on the checkbox button on the left hand side of "What Needs to Be Done" does not allow the user
